@@ -7,7 +7,7 @@ export default function DataPreview(props: { id: string; type?: string }) {
   return (
     <Box background="light-6" height={{ min: '200px' }}>
       <object
-        data={`https://arweave.net/${props.id}`}
+        data={`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/${props.id}`}
         type={props.type}
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}

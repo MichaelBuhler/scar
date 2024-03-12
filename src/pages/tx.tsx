@@ -17,7 +17,7 @@ export default function TransactionPage() {
   )
   const { data: transaction } = useSWR<Transaction>(
     hash ? ['transactions', 'get', hash] : null,
-    () => fetch(`https://arweave.net/tx/${hash}`).then((response) => response.json()),
+    () => fetch(`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/tx/${hash}`).then((response) => response.json()),
   )
   const type = useMemo(() => {
     const tag = transaction?.tags.find(

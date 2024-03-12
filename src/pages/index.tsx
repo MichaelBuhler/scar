@@ -28,7 +28,7 @@ export default function IndexPage() {
     refreshInterval: 2 * 1000,
   })
   const { data: pendings } = useSWR<string[]>(
-    'https://arweave.net/tx/pending',
+    `${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/tx/pending`,
     (url) => fetch(url).then((response) => response.json()),
     { refreshInterval: 2 * 1000 },
   )
