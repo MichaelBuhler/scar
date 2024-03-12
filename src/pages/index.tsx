@@ -29,7 +29,8 @@ export default function IndexPage() {
   })
   const { data: pendings } = useSWR<string[]>(
     `${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/tx/pending`,
-    (url) => fetch(url).then((response) => response.json()),
+    // (url) => fetch(url).then((response) => response.json()),
+    () => [],
     { refreshInterval: 2 * 1000 },
   )
   const { data: blocks } = useSWR(
@@ -102,7 +103,7 @@ export default function IndexPage() {
             </Box>
             <Box gridArea="storage" align={size === 'small' ? 'center' : 'end'}>
               <Heading level="3" margin="0">
-                {blocks
+                {blocks?.[0]?.weave_size
                   ? prettyBytes(parseInt(blocks[0].weave_size as unknown as string, 10), {
                       locale: true,
                       binary: true,
@@ -148,11 +149,12 @@ export default function IndexPage() {
             },
             {
               property: 'block_size',
-              render: (block) =>
-                prettyBytes(parseInt(block.block_size as unknown as string, 10), {
-                  locale: true,
-                  binary: true,
-                }),
+              render: (block) => block?.block_size
+                ? prettyBytes(parseInt(block.block_size as unknown as string, 10), {
+                    locale: true,
+                    binary: true,
+                  })
+                : '-',
               header: 'Block size',
               align: 'end',
             },

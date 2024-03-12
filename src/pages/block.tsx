@@ -68,7 +68,7 @@ export default function BlockPage() {
             Block size
           </Heading>
           <Text>
-            {block
+            {block?.block_size
               ? prettyBytes(parseInt(block.block_size as unknown as string, 10), {
                   locale: true,
                   binary: true,
