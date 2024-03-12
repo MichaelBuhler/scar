@@ -1,17 +1,5 @@
-# ScAR
+# MichaelBuhler/scar
 
-An Arweave Explorer and Toolkit on the Permaweb.
-
-Available on:
-
-- https://arweave.net/KPXb-bunjcgY5uuy-vjFnwmpcsYGlP6fl84dqALqpmk
-- https://scar.vercel.app
-- https://scar.pages.dev
-
-Features:
-
-- [x] world map of peers
-- [x] search bar for block, transaction and address
-- [x] block list, block detail
-- [x] transaction list, transaction detail
-- [x] rich content preview (based on content-type tag)
+This repo has been forked from [renzholy/scar](https://github.com/renzholy/scar)
+and has been modified to work with any gateway by replacing hard-coded references
+to arweave.net with the VITE_GATEWAY_URL build-time environment variable.
