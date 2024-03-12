@@ -136,15 +136,18 @@ export default function TransactionPage() {
           {transaction && parseInt(transaction.data_size, 10) > 0 ? (
             <>
               <Anchor
-                href={`https://arweave.net/${transaction.id}`}
+                href={`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/${transaction.id}`}
                 target="_blank"
                 weight="normal"
                 margin={{ bottom: 'medium' }}
                 color="light-1"
               >
-                https://arweave.net/{transaction.id}
+                {`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/${transaction.id}`}
               </Anchor>
-              <DataPreview id={transaction.id} type={type} />
+              {transaction.data && (
+                <pre>{transaction.data}</pre>
+              )}
+              {/* <DataPreview id={transaction.id} type={type} /> */}
             </>
           ) : (
             <Text>No data</Text>
