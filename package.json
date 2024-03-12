@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "arweave": "^1.11.6",
-    "graphql": "^16.6.0",
+    "graphql": "16.6.0",
     "graphql-request": "^5.0.0",
     "grommet": "^2.27.0",
     "grommet-icons": "^4.8.0",
