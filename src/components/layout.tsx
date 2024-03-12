@@ -80,7 +80,7 @@ export default function Layout(props: { children: ReactNode }) {
               }}
             />
           </Box>
-          <Anchor href="https://github.com/renzholy/scar" target="_blank" style={{ lineHeight: 0 }}>
+          <Anchor href="https://github.com/MichaelBuhler/scar" target="_blank" style={{ lineHeight: 0 }}>
             <Icon.Github />
           </Anchor>
         </Box>
