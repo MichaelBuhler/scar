@@ -27,7 +27,7 @@ export default function IndexPage() {
   const { data: info } = useSWR(['getInfo'], () => arweave.network.getInfo(), {
     refreshInterval: 2 * 1000,
   })
-  const { data: pendings } = useSWR<string[]>(
+  const { data: pending } = useSWR<string[]>(
     `${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/tx/pending`,
     async (url) => {
       try {
@@ -80,7 +80,7 @@ export default function IndexPage() {
                 { name: 'storage', start: [2, 0], end: [2, 0] },
                 { name: 'queue', start: [0, 1], end: [0, 1] },
                 { name: 'latency', start: [1, 1], end: [1, 1] },
-                { name: 'pendings', start: [2, 1], end: [2, 1] },
+                { name: 'pending', start: [2, 1], end: [2, 1] },
               ]
             : [
                 { name: 'map', start: [0, 0], end: [0, 2] },
@@ -89,7 +89,7 @@ export default function IndexPage() {
                 { name: 'storage', start: [1, 2], end: [1, 2] },
                 { name: 'queue', start: [2, 0], end: [2, 0] },
                 { name: 'latency', start: [2, 1], end: [2, 1] },
-                { name: 'pendings', start: [2, 2], end: [2, 2] },
+                { name: 'pending', start: [2, 2], end: [2, 2] },
               ]
         }
       >
@@ -131,11 +131,11 @@ export default function IndexPage() {
               </Heading>
               <Text color="dark-6">Latency</Text>
             </Box>
-            <Box gridArea="pendings" align={size === 'small' ? 'center' : 'end'}>
+            <Box gridArea="pending" align={size === 'small' ? 'center' : 'end'}>
               <Heading level="3" margin="0">
-                {pendings ? formatNumber(pendings.length) : '-'}
+                {pending ? formatNumber(pending.length) : '-'}
               </Heading>
-              <Text color="dark-6">Pendings</Text>
+              <Text color="dark-6">Pending</Text>
             </Box>
           </>
         ) : null}
