@@ -29,8 +29,15 @@ export default function IndexPage() {
   })
   const { data: pendings } = useSWR<string[]>(
     `${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/tx/pending`,
-    // (url) => fetch(url).then((response) => response.json()),
-    () => [],
+    async (url) => {
+      try {
+        const response = await fetch(url);
+        return await response.json();
+      } catch (err) {
+        console.error(err);
+        return [];
+      }
+    },
     { refreshInterval: 2 * 1000 },
   )
   const { data: blocks } = useSWR(
