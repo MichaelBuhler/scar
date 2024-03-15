@@ -29,8 +29,11 @@ export default function TransactionsList(props: {
         {
           property: 'data.type',
           header: 'Type',
-          render: (transaction) =>
-            transaction.recipient ? '[transfer]' : transaction.data.type || '-',
+          render: (transaction) => {
+            if (isArTransfer(transaction)) return '[AR Transfer]'
+            if (isBundle(transaction)) return '[ANS-104 Bundle]'
+            return transaction.data.type || <i>unknown</i>
+          }
         },
         {
           property: 'data.size',
@@ -72,4 +75,13 @@ export default function TransactionsList(props: {
       }}
     />
   )
+}
+
+function isArTransfer (tx: ListTransactionsQuery['transactions']['edges'][0]['node']) : boolean {
+  return !!tx.recipient
+}
+
+function isBundle (tx: ListTransactionsQuery['transactions']['edges'][0]['node']) : boolean {
+  return tx.tags.find(t => t.name === 'Bundle-Format')?.value === 'binary' &&
+         tx.tags.find(t => t.name === 'Bundle-Version')?.value === '2.0.0'
 }
