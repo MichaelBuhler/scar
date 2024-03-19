@@ -65,7 +65,7 @@ export default function TransactionPage() {
           <Heading level="3" color="dark-6">
             Reward
           </Heading>
-          <Text>{transaction ? formatNumber(parseInt(transaction.reward, 10)) : '-'} winston</Text>
+          <Text>{transaction ? formatNumber(parseInt(transaction.reward || '0', 10)) : '-'} winston</Text>
         </Box>
         <Box gridArea="confirmations">
           <Heading level="3" color="dark-6">
@@ -130,11 +130,11 @@ export default function TransactionPage() {
               }
             />
           </Box>
-          <Heading level="3" color="dark-6">
-            Data
-          </Heading>
           {transaction && parseInt(transaction.data_size, 10) > 0 ? (
             <>
+              <Heading level="3" color="dark-6">
+                Data
+              </Heading>
               <Anchor
                 href={`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/${transaction.id}`}
                 target="_blank"
@@ -144,10 +144,14 @@ export default function TransactionPage() {
               >
                 {`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/${transaction.id}`}
               </Anchor>
-              {transaction.data && (
-                <pre>{transaction.data}</pre>
+              <Heading level="3" color="dark-6">
+                Data
+              </Heading>
+              {transaction.data ? (
+                <pre>{Arweave.utils.b64UrlToString(Arweave.utils.bufferToString(transaction.data))}</pre>
+              ): (
+               <DataPreview id={transaction.id} type={type} />
               )}
-              {/* <DataPreview id={transaction.id} type={type} /> */}
             </>
           ) : (
             <Text>No data</Text>

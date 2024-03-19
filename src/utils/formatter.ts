@@ -3,6 +3,9 @@ const numberFormat = Intl.NumberFormat()
 export const formatNumber = numberFormat.format
 
 export function formatBalance(value: string, factor: number) {
+  if (value === null || value === undefined) {
+    value = "0"
+  }
   if (factor === 0) {
     return value
   }

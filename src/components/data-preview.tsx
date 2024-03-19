@@ -1,22 +1,38 @@
-import { Box, Spinner } from 'grommet'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function DataPreview(props: { id: string; type?: string }) {
-  const [loaded, setLoaded] = useState(false)
+interface Props {
+  id: string
+  type: string
+}
 
-  return (
-    <Box background="light-6" height={{ min: '200px' }}>
-      <object
-        data={`${import.meta.env.VITE_ARWEAVE_GATEWAY_URL}/${props.id}`}
-        type={props.type}
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-      />
-      {loaded ? null : (
-        <Box fill={true} align="center" justify="center">
-          <Spinner />
-        </Box>
-      )}
-    </Box>
-  )
+export default function DataPreview (props: Props) {
+  const { id: txId, type } = props
+
+  const [loading, setLoading] = useState<boolean>(true)
+  const [data, setData] = useState<string>()
+
+  useEffect(() => {
+    setLoading(true)
+    fetch(new URL(txId, import.meta.env.VITE_ARWEAVE_GATEWAY_URL)).then(async response => {
+      const data = await response.text()
+      if (type === 'application/json') {
+        try {
+          const obj = JSON.parse(data)
+          const formatted = JSON.stringify(obj, null, 2)
+          setData(formatted)
+        } catch (e) {
+          setData(data)
+        }
+      } else {
+        setData(data)
+      }
+      setLoading(false)
+    })
+  }, [txId])
+
+  return (loading ? (
+    <>Loading...</>
+  ) : (
+    <pre>{data}</pre>
+  ))
 }
